@@ -89,4 +89,6 @@ class DenonFinderLinux: NetServiceBrowserDelegate, NetServiceDelegate, DenonFind
 
 }
 
+#else
+	fatalError("This code should only be run on Linux...")
 #endif
