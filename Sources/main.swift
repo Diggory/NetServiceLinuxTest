@@ -3,6 +3,24 @@
 import NetService
 import Foundation
 
+
+//    MARK: - Denon Finding Protocol Definition -
+
+///	A Type that will find Denon Amps on the network.
+protocol DenonFinder {
+	var findingDelegate: DenonFindingDelegate? { get set }
+	func find()
+}
+
+///	A Type that will be informed of the finding of Denon Amps
+protocol DenonFindingDelegate {
+	func denonDeviceFound(addressString: String)
+}
+
+
+
+//    MARK: - Main Entry Point -
+
 let finderClient = FindingClient()
 let denonFinderLinux = DenonFinderLinux()
 denonFinderLinux.findingDelegate = finderClient
@@ -15,16 +33,6 @@ let shouldKeepRunning = true
 //	Run forever
 while shouldKeepRunning == true &&
 		runLoop.run(mode:.default, before: distantFuture) {}
-
-
-protocol DenonFinder {
-	var findingDelegate: DenonFindingDelegate? { get set }
-	func find()
-}
-
-protocol DenonFindingDelegate {
-	func denonDeviceFound(addressString: String)
-}
 
 
 class FindingClient: DenonFindingDelegate {
@@ -45,7 +53,7 @@ class DenonFinderLinux: NetServiceBrowserDelegate, NetServiceDelegate, DenonFind
 		browser.searchForServices(ofType: "_http._tcp.", inDomain: "local.")
 	}
 
-	//	NetServiceBrowserDelegate
+	//    MARK: - NetServiceBrowserDelegate Conformation
 
 	func netServiceBrowserWillSearch(_ browser: NetServiceBrowser) {
 		print("🔎 Starting mDNS search...")
@@ -64,7 +72,8 @@ class DenonFinderLinux: NetServiceBrowserDelegate, NetServiceDelegate, DenonFind
 		}
 	}
 	
-	//	NetServiceDelegate
+	
+	//    MARK: - NetServiceDelegate Conformation
 
 	func netServiceWillResolve(_ sender: NetService) {
 		print("netServiceWillResolve(\(sender.name))")
