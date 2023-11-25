@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "netservice",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Bouke/NetService.git",
+      "state" : {
+        "revision" : "08e1f7663fd4b09b9f4ad165be89704c7cd2e3f8",
+        "version" : "0.8.1"
+      }
+    }
+  ],
+  "version" : 2
+}
