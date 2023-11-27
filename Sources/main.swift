@@ -17,8 +17,6 @@ protocol DenonFindingDelegate {
 	func denonDeviceFound(addressString: String)
 }
 
-
-
 //    MARK: - Main Entry Point -
 
 let finderClient = FindingClient()
@@ -62,14 +60,10 @@ class DenonFinderLinux: NetServiceBrowserDelegate, NetServiceDelegate, DenonFind
 	public func netServiceBrowser(_ browser: NetServiceBrowser, didFind service: NetService, moreComing: Bool) {
 		print("Did find: \(service.name)")
 		let searchContainsAVR = "AVR"
-		if service.name.contains(searchContainsAVR) {
-			print("🧐 Found HTTP service that contains: \(searchContainsAVR)")
-			print("Service name: \(service.name)")
-			findingDelegate?.denonDeviceFound(addressString: service.name)
 
-			service.delegate = self
-			service.resolve(withTimeout: 5)
-		}
+		findingDelegate?.denonDeviceFound(addressString: service.name)
+		service.delegate = self
+		service.resolve(withTimeout: 5)
 	}
 	
 	
@@ -90,5 +84,5 @@ class DenonFinderLinux: NetServiceBrowserDelegate, NetServiceDelegate, DenonFind
 }
 
 #else
-	fatalError("This code should only be run on Linux...")
+	fatalError("This code should only be run on Linux…")
 #endif
