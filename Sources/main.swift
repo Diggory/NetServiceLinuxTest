@@ -59,11 +59,16 @@ class DenonFinderLinux: NetServiceBrowserDelegate, NetServiceDelegate, DenonFind
 	
 	public func netServiceBrowser(_ browser: NetServiceBrowser, didFind service: NetService, moreComing: Bool) {
 		print("Did find: \(service.name)")
-		let searchContainsAVR = "AVR"
+//		let searchContainsAVR = "AVR"
 
-		findingDelegate?.denonDeviceFound(addressString: service.name)
-		service.delegate = self
-		service.resolve(withTimeout: 5)
+        //    Only resolve the first service...
+        if firstAmpService == nil {
+            firstAmpService = service
+            findingDelegate?.denonDeviceFound(addressString: firstAmpService.name)
+            firstAmpService?.delegate = self
+            firstAmpService?.resolve(withTimeout: 5)
+        }
+
 	}
 	
 	
