@@ -64,7 +64,7 @@ class DenonFinderLinux: NetServiceBrowserDelegate, NetServiceDelegate, DenonFind
         //    Only resolve the first service...
         if firstAmpService == nil {
             firstAmpService = service
-            findingDelegate?.denonDeviceFound(addressString: firstAmpService.name)
+            findingDelegate?.denonDeviceFound(addressString: firstAmpService?.name)
             firstAmpService?.delegate = self
             firstAmpService?.resolve(withTimeout: 5)
         }
